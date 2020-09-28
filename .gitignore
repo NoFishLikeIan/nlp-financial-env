@@ -130,7 +130,6 @@ lib/
 lib64/
 
 # Scripting
-data/
 cached/
 out/
 lists_py/
