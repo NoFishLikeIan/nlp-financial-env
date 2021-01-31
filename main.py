@@ -2,7 +2,7 @@ import spacy
 
 from PyPDF2.utils import PdfReadError
 
-from utils import read_pdf, parser_model, url
+from utils import read_pdf, parser_model, url_parse
 from nlp import topic
 
 URLS = "data/urls-st.txt"
@@ -12,7 +12,7 @@ if __name__ == '__main__':
     with open(URLS, "r") as file:
         urls = file.read().split("\n")
 
-    names = [url.get_name(u) for u in urls]
+    names = [url_parse.get_name(u) for u in urls]
 
     urls = dict(zip(names, urls))
 
