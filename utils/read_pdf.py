@@ -1,12 +1,32 @@
 import PyPDF2
-import string
-import requests
-import re
-import io
-import os
+import nltk
 
-from .parser_model import nlp
+import re, io, os, requests, string
+from nltk.tokenize import RegexpTokenizer
+from nltk.stem import WordNetLemmatizer,PorterStemmer
+from nltk.corpus import stopwords
 
+nltk.download(["punkt", "wordnet", "stopwords"])
+
+lemmatizer = WordNetLemmatizer()
+stemmer = PorterStemmer() 
+
+def preprocess(sentence):
+    sentence=str(sentence)
+    sentence = sentence.lower()
+    sentence=sentence.replace('{html}',"") 
+    cleantext = re.sub(re.compile('<.*?>'), '', sentence)
+    rem_url=re.sub(r'http\S+', '',cleantext)
+    rem_num = re.sub('[0-9]+', '', rem_url)
+    tokenizer = RegexpTokenizer(r'\w+')
+    tokens = tokenizer.tokenize(rem_num)  
+    filtered_words = [w for w in tokens if len(w) > 2 if not w in stopwords.words('english')]
+
+    stem_words=[stemmer.stem(w) for w in filtered_words]
+
+    lemma_words=[lemmatizer.lemmatize(w) for w in stem_words]
+
+    return " ".join(filtered_words)
 
 def is_url(to_validate):
 
@@ -21,34 +41,8 @@ def is_url(to_validate):
     return re.match(url_regex, to_validate) is not None
 
 def extract_statements(text):
-
-  lines = []
-  prev = ""
-  for line in text.split('\n'):
-
-    if line.startswith(' ') or not prev.endswith('.'):
-        prev = prev + ' ' + line
-    else:
-        lines.append(prev)
-        prev = line
-        
-  lines.append(prev)
-
-  sentences = []
-  for line in lines:
     
-      line = re.sub(r'^\s?\d+(.*)$', r'\1', line)
-      line = line.strip()
-      line = re.sub('\s?-\s?', '-', line)
-      line = re.sub(r'\s?([,:;\.])', r'\1', line)
-      line = re.sub(r'\d{5,}', r' ', line)
-      line = re.sub(r'((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*', r' ', line)
-      line = re.sub('\s+', ' ', line)
-
-
-      sentences.append(nlp(line))
-
-  return sentences
+    return [nltk.word_tokenize(preprocess(sent)) for sent in nltk.sent_tokenize(text)]
 
 
 def pdf_to_text(pdf):
@@ -71,14 +65,14 @@ def path_to_sentences(filepath: str) -> str:
 
     if os.path.isfile(filepath):
         with open(filepath, "rb") as file:
-            pdf = PyPDF2.PdfFileReader(file)
+            pdf = PyPDF2.PdfFileReader(file, strict=False)
             text = pdf_to_text(pdf)
 
     else:
         response = requests.get(filepath)
 
         with io.BytesIO(response.content) as file:
-            pdf = PyPDF2.PdfFileReader(file)
+            pdf = PyPDF2.PdfFileReader(file, strict=False)
             text = pdf_to_text(pdf)
 
     return extract_statements(text)

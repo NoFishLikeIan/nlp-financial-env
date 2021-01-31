@@ -1,7 +1,27 @@
 import scipy
 import pandas as pd
+import gensim
 
-def format_topics_sentences(ldamodel, corpus, texts) -> pd.DataFrame:
+from gensim.models.ldamodel import LdaModel
+
+from typing import List, Tuple, NewType
+
+Topics = NewType("Topics", Tuple[LdaModel, List[Tuple[int, int]]])
+
+def get_topics(sentences:List[str], **kwargs) -> Topics:
+    """
+    Parses a list of words (assumed to be a sentence) using a
+    LdaModel, returns the model and the gensim corpus.
+    """
+    words = gensim.corpora.Dictionary(sentences)
+
+    corpus = [words.doc2bow(doc) for doc in sentences]
+
+    lda_model = LdaModel(corpus=corpus, id2word=words, alpha='auto', **kwargs)
+
+    return lda_model, corpus
+
+def format_topics_sentences(ldamodel, sentences) -> pd.DataFrame:
     
     sent_topics_df = pd.DataFrame()
 
@@ -19,7 +39,7 @@ def format_topics_sentences(ldamodel, corpus, texts) -> pd.DataFrame:
                 
     sent_topics_df.columns = ['Dominant_Topic', 'Perc_Contribution', 'Topic_Keywords']
 
-    contents = pd.Series(texts)
+    contents = pd.Series(sentences)
     sent_topics_df = pd.concat([sent_topics_df, contents], axis=1)
 
     return sent_topics_df
