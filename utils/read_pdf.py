@@ -69,19 +69,16 @@ def path_to_sentences(filepath: str) -> str:
 
     text = ""
 
-    if is_url(filepath):
-        response = requests.get(filepath)
-
-        with io.BytesIO(response.content) as file:
-            pdf = PyPDF2.PdfFileReader(file)
-            text = pdf_to_text(pdf)
-
-    elif os.path.isfile(filepath):
+    if os.path.isfile(filepath):
         with open(filepath, "rb") as file:
             pdf = PyPDF2.PdfFileReader(file)
             text = pdf_to_text(pdf)
 
     else:
-        raise ValueError("Filepath not understood")
+        response = requests.get(filepath)
+
+        with io.BytesIO(response.content) as file:
+            pdf = PyPDF2.PdfFileReader(file)
+            text = pdf_to_text(pdf)
 
     return extract_statements(text)

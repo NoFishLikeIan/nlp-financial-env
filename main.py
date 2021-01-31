@@ -1,16 +1,27 @@
 import spacy
 
-from utils import read_pdf
+from PyPDF2.utils import PdfReadError
+
+from utils import read_pdf, parser_model, url
 from nlp import topic
 
-TEST_FILE = "data/About-us_Voting-Policy-Proprietary-Investments_en.pdf"
+URLS = "data/urls-st.txt"
 
 if __name__ == '__main__':
 
-    text = read_pdf.path_to_sentences(TEST_FILE)
+    with open(URLS, "r") as file:
+        urls = file.read().split("\n")
 
-    
-    topic.get_topics(text)
+    names = [url.get_name(u) for u in urls]
 
+    urls = dict(zip(names, urls))
 
+    text = []
+
+    for entry, url in urls.items():
+        try:
+            sentences = read_pdf.path_to_sentences(url)
+            text.append(sentences)
+        except PdfReadError:
+            text.append([])
     
