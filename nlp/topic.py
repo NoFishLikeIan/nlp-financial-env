@@ -21,7 +21,7 @@ def get_topics(sentences:List[str], **kwargs) -> Topics:
 
     return lda_model, corpus
 
-def format_topics_sentences(ldamodel, sentences) -> pd.DataFrame:
+def format_topics_sentences(ldamodel, corpus, sentences) -> pd.DataFrame:
     
     sent_topics_df = pd.DataFrame()
 

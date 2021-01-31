@@ -1,4 +1,7 @@
 import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def plot_bigrams(sentences, ax, n = 10):
