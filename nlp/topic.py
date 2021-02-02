@@ -19,7 +19,7 @@ def get_topics(sentences:List[str], **kwargs) -> Topics:
 
     lda_model = LdaModel(corpus=corpus, id2word=words, alpha='auto', **kwargs)
 
-    return lda_model, corpus
+    return lda_model, corpus, words
 
 def format_topics_sentences(ldamodel, corpus, sentences) -> pd.DataFrame:
     
