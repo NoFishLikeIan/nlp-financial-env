@@ -3,17 +3,18 @@ import pandas as pd
 import gensim
 
 from gensim.models.ldamodel import LdaModel
+from gensim.corpora import Dictionary
 
 from typing import List, Tuple, NewType
 
-Topics = NewType("Topics", Tuple[LdaModel, List[Tuple[int, int]]])
+Topics = NewType("Topics", Tuple[LdaModel, List[Tuple[int, int]], Dictionary])
 
 def get_topics(sentences:List[str], **kwargs) -> Topics:
     """
     Parses a list of words (assumed to be a sentence) using a
     LdaModel, returns the model and the gensim corpus.
     """
-    words = gensim.corpora.Dictionary(sentences)
+    words = Dictionary(sentences)
 
     corpus = [words.doc2bow(doc) for doc in sentences]
 

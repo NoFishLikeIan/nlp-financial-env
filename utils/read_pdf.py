@@ -6,6 +6,8 @@ from nltk.tokenize import RegexpTokenizer
 from nltk.stem import WordNetLemmatizer,PorterStemmer
 from nltk.corpus import stopwords
 
+from typing import List
+
 nltk.download(["punkt", "wordnet", "stopwords"])
 
 lemmatizer = WordNetLemmatizer()
@@ -59,7 +61,7 @@ def pdf_to_text(pdf):
     return text
 
 
-def path_to_sentences(filepath: str) -> str:
+def path_to_sentences(filepath: str) -> List[str]:
 
     text = ""
 

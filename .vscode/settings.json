@@ -6,5 +6,6 @@
         "nltk",
         "punkt",
         "spacy"
-    ]
+    ],
+    "jupyter.jupyterServerType": "local"
 }
