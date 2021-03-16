@@ -1,6 +1,8 @@
 import os
 import json 
 
+from dotenv import load_dotenv, find_dotenv
+
 from math import log
 from itertools import chain, islice
 
@@ -9,20 +11,10 @@ from gensim.corpora.dictionary import Dictionary
 
 from PyPDF2.utils import PdfReadError
 
-from utils import read_pdf, url_parse, plotting
+from utils import url_parse, plotting
 from nlp import topic
+from parse_reports import read_sentences
 
-
-REPORTS = "data/reports/" 
-VERBOSE = False # TODO: move to env
-
-def read_reports(reportpath):
-    for filename in os.listdir(REPORTS):
-
-        filepath = os.path.join(REPORTS, filename)
-        report = read_pdf.path_to_sentences(filepath)
-
-        yield report, filename
 
 def saliency_index(lda: LdaModel, corpus, words: Dictionary):
 
@@ -46,27 +38,31 @@ def saliency_index(lda: LdaModel, corpus, words: Dictionary):
 
     return { words[i]: s for i, s in enumerate(saliencies) }
 
-
 if __name__ == '__main__':
+
+    load_dotenv(find_dotenv())
+    VERBOSE = os.environ.get("VERBOSE", "False") == "True"
+    SENTENCES = os.environ.get("SENTENCES")
 
     companies = {}
 
-    for report, filename in read_reports(REPORTS):
-        company = filename.replace(".pdf", "")
-        print(f"Report {company}...")
+    for sentences, filename in read_sentences(SENTENCES):
 
-        try:
+        company, extension = os.path.splitext(filename) 
 
-            lda, corpus, words = topic.get_topics(report)
+        VERBOSE and print(f"Working on {company}...")
 
-            saliencies = saliency_index(lda, corpus, words) 
+        lda, corpus, words = topic.get_topics(sentences)
 
-            companies[company] = saliencies
+        saliencies = saliency_index(lda, corpus, words) 
 
-        except:
-            print("...failed to read pdf!")
-            
+        companies[company] = saliencies
+
+
+    VERBOSE and print("Writing results...")
 
     with open("data/saliency.json", "w") as outfile:
 
         json.dump(companies, outfile)
+
+    VERBOSE and print("...done!")
