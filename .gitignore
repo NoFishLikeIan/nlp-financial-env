@@ -306,3 +306,6 @@ homework/adv-macroeconometrics/week-two/fred-database_code
 rename.sh
 plots
 data/reports
+data/broken
+data/outreports
+data/saliency.json

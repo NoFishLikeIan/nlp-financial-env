@@ -5,7 +5,8 @@
         "lemmatizer",
         "nltk",
         "punkt",
-        "spacy"
+        "spacy",
+        "topn"
     ],
     "jupyter.jupyterServerType": "local"
 }
