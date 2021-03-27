@@ -52,12 +52,16 @@ if __name__ == '__main__':
 
         VERBOSE and print(f"Working on {company}...")
 
-        lda, corpus, words = topic.get_topics(sentences)
+        if len(sentences[0]) > 0:
 
-        saliencies = saliency_index(lda, corpus, words) 
+            lda, corpus, words = topic.get_topics(sentences)
 
-        companies[company] = saliencies
+            saliencies = saliency_index(lda, corpus, words) 
 
+            companies[company] = saliencies
+
+        else:
+            VERBOSE and print(f"{company} has empty sentences...")
 
     VERBOSE and print("Writing results...")
 
