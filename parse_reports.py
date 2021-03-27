@@ -2,6 +2,8 @@ import os
 import json
 from dotenv import load_dotenv, find_dotenv
 
+from PyPDF2.utils import PdfReadError
+
 from utils import read_pdf
 
 
@@ -30,11 +32,14 @@ if __name__ == '__main__':
 
     load_dotenv(find_dotenv())
     REPORTS = os.environ.get("REPORTS")
+    VERBOSE = os.environ.get("VERBOSE", "False") == "True"
 
     if not REPORTS:
         raise ValueError("Could not find REPORTS path. Make sure you create a .env with REPORTS")
     
     for report, filename in read_reports(REPORTS):
+
+        VERBOSE and print(f"Parsing {filename}")
         
         company = filename.replace(".pdf", "")
 

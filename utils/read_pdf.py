@@ -1,5 +1,6 @@
 import PyPDF2
 import nltk
+import os
 
 import re, io, os, requests, string
 from nltk.tokenize import RegexpTokenizer
@@ -61,14 +62,38 @@ def pdf_to_text(pdf):
     return text
 
 
+def pdfreader_decrypt(filename):
+    """
+    https://stackoverflow.com/a/48364988
+    """    
+    with open(filename, "rb") as fp:
+        pdfFile  = PyPDF2.PdfFileReader(fp, strict=False)
+
+        if pdfFile.isEncrypted:
+            try:
+                pdfFile.decrypt('')
+                print('File Decrypted (PyPDF2)')
+
+                return pdf_to_text(pdfFile)
+            except:
+                command = f'cp "{filename}" temp.pdf; qpdf --password="" --decrypt temp.pdf "{filename}"; rm temp.pdf'
+
+                os.system(command)
+                print('File Decrypted (qpdf)')
+
+                with open(filename, "rb") as fp:
+                    pdfFile = PyPDF2.PdfFileReader(fp, strict=False)
+                    return pdf_to_text(pdfFile)
+
+        return pdf_to_text(pdfFile)
+
+
 def path_to_sentences(filepath: str) -> List[str]:
 
     text = ""
 
-    if os.path.isfile(filepath):
-        with open(filepath, "rb") as file:
-            pdf = PyPDF2.PdfFileReader(file, strict=False)
-            text = pdf_to_text(pdf)
+    if os.path.isfile(filepath):       
+        text = pdfreader_decrypt(filepath)
 
     else:
         response = requests.get(filepath)
@@ -76,5 +101,5 @@ def path_to_sentences(filepath: str) -> List[str]:
         with io.BytesIO(response.content) as file:
             pdf = PyPDF2.PdfFileReader(file, strict=False)
             text = pdf_to_text(pdf)
-
+    
     return extract_statements(text)

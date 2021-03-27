@@ -307,5 +307,7 @@ rename.sh
 plots
 data/reports
 data/broken
+data/decision-making
+data/out-decision-making
 data/outreports
 data/saliency.json
