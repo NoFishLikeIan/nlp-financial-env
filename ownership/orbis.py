@@ -1,6 +1,8 @@
 import os
 import pandas as pd
 
+from typing import List
+
 from dotenv import load_dotenv, find_dotenv
 
 from pandas.io.sas.sas7bdat import SAS7BDATReader
@@ -14,20 +16,39 @@ def import_data(path):
 def look_for(
     comp:str, data_generator:SAS7BDATReader,
     col_names = ["AKANAME", "_890201"],
-    verbose = False
-) -> pd.DataFrame:
+    verbose = False) -> List[bytes]:
 
     is_comp_name = lambda ns: any(comp in str(n).lower() for n in ns)
 
-    results = []
+    found_dfs = []
 
-    for i, chunk in enumerate(data_generator):
+    i = 0
+
+    # TODO: Find better way to handle iterator
+    while True:
+        i += 1
         try:
-            verbose and print(f"Chunk: {i + 1}", end="\r")
+            chunk = next(data_generator)
+            company_idx = chunk[col_names].apply(
+                is_comp_name, 
+                axis = 1
+            )
 
-            company_idx = chunk[col_names].apply(is_comp_name, axis = 1)
-            results.append(chunk[company_idx])
-        except OutOfBoundsDatetime as error:
+            found_dfs.append(chunk[company_idx])
+
+            verbose and print(f"Chunk {i}", end = "\r")
+
+        except (ValueError, OutOfBoundsDatetime) as error: 
+            # Error with reading data
             print(f"\n{error}\n")
 
-    return pd.concat(results)
+
+        except StopIteration: 
+            # End of iteration
+            break
+
+    bvdid = pd.concat(found_dfs)["bvdid"].tolist()
+
+
+    return bvdid
+
