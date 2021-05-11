@@ -17,6 +17,24 @@ def look_for(
     comp:str, data_generator:SAS7BDATReader,
     col_names = ["AKANAME", "_890201"],
     verbose = False) -> List[bytes]:
+    """
+    Look for a company name in a SAS reader generator
+
+    Parameters
+    ----------
+    comp : str
+        Company name
+    data_generator : SAS7BDATReader
+    col_names :, optional
+        by default ["AKANAME", "_890201"]
+    verbose :, optional
+        by default False
+
+    Returns
+    -------
+    List[bytes]
+        A list of ids in bytes form
+    """
 
     is_comp_name = lambda ns: any(comp in str(n).lower() for n in ns)
 
@@ -52,3 +70,35 @@ def look_for(
 
     return bvdid
 
+def extract_ownership(ids:List[bytes], data_generator:SAS7BDATReader, verbose = False):
+    """
+    Extract ownership data of companies given their ids
+
+    Parameters
+    ----------
+    ids : List[bytes]
+    data_generator : Sas7BDATReader
+        Ownership data generator
+    verbose : optional
+        by default False
+    """
+
+    found_dfs = []
+    i = 0
+
+    while True:
+        i += 1
+        try:
+            chunk = next(data_generator)
+
+            dfs = chunk[chunk["bvdid"].isin(ids)]
+
+            found_dfs.append(dfs)
+
+            verbose and print(f"Chunk {i}", end = "\r")
+
+        except StopIteration: 
+            # End of iteration
+            break
+
+    return pd.concat(found_dfs)
