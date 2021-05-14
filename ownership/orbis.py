@@ -16,7 +16,7 @@ def import_data(path):
 def look_for(
     comp:str, data_generator:SAS7BDATReader,
     col_names = ["AKANAME", "_890201"],
-    verbose = False) -> List[bytes]:
+    verbose = False) -> pd.DataFrame:
     """
     Look for a company name in a SAS reader generator
 
@@ -32,8 +32,7 @@ def look_for(
 
     Returns
     -------
-    List[bytes]
-        A list of ids in bytes form
+    pd.DataFrame
     """
 
     is_comp_name = lambda ns: any(comp in str(n).lower() for n in ns)
@@ -65,10 +64,7 @@ def look_for(
             # End of iteration
             break
 
-    bvdid = pd.concat(found_dfs)["bvdid"].tolist()
-
-
-    return bvdid
+    return pd.concat(found_dfs)
 
 def extract_ownership(ids:List[bytes], data_generator:SAS7BDATReader, verbose = False):
     """
