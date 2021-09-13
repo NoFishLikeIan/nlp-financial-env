@@ -1,7 +1,4 @@
-import scipy
 import pandas as pd
-import gensim
-
 from gensim.models.ldamodel import LdaModel
 from gensim.corpora import Dictionary
 
