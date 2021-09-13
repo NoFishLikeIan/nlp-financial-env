@@ -4,16 +4,13 @@ import json
 from dotenv import load_dotenv, find_dotenv
 
 from math import log
-from itertools import chain, islice
+from itertools import chain
 
 from gensim.models.ldamodel import LdaModel
 from gensim.corpora.dictionary import Dictionary
 
-from PyPDF2.utils import PdfReadError
-
-from utils import url_parse, plotting
-from nlp import topic
 from parse_reports import read_sentences
+from nlp import topic
 
 
 def saliency_index(lda: LdaModel, corpus, words: Dictionary):
