@@ -18,6 +18,13 @@ def get_esg_by_year(raw:pd.DataFrame) -> Callable[[str, str], pd.DataFrame]:
     data["Name"] = name_df[0]
     data["Data type"] = name_df[1]
         
-    
-    return lambda year: pd.pivot_table(
-        data, index = ["Name"], columns=["Data type"], values = [str(year)])
+    def getyear(year):
+        if int(year) < 2016 or int(year) > 2021:
+            raise ValueError(f"Year {year} not valid. Data only available for period 2016-2021.") 
+        
+        year_df = pd.pivot_table(data, 
+            index = ["Name"], columns=["Data type"], values = [str(year)])
+
+        return year_df
+
+    return getyear
