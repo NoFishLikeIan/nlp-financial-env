@@ -6,7 +6,7 @@ import numpy as np
 """
 From raw .xlsx ESG data construct a function of year that yields pd.DataFrame with companies as row, type of index as columns, and scores.
 """
-def get_esg_by_year(raw:pd.DataFrame) -> Callable[[str, str], pd.DataFrame]:
+def yearly_esg_maker(raw:pd.DataFrame) -> Callable[[str, str], pd.DataFrame]:
 
     data = raw.iloc[3:, :]
     data.columns = raw.iloc[2, :].apply(

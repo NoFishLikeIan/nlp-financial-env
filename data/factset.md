@@ -17,3 +17,5 @@ Goes through the side bar,
 
 Can download from green icon into Excel
 
+ESG = b * (saliency * ownership)
+
