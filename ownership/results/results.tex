@@ -4,6 +4,8 @@
 \usepackage[english]{babel}
 \usepackage[utf8x]{inputenc}
 
+\usepackage[margin=0.5in]{geometry}
+
 \usepackage{booktabs}
 \usepackage{tabu}
 \usepackage[T1]{fontenc}
@@ -60,50 +62,55 @@
 
 \begin{document}
 \maketitle
-
 \begin{center}
-    \begin{tabular}{lclc}
-    \toprule
-    \textbf{Dep. Variable:}               & Environment Pillar Score & \textbf{  R-squared:         } &     0.142   \\
-    \textbf{Model:}                       &           OLS            & \textbf{  Adj. R-squared:    } &     0.140   \\
-    \textbf{Method:}                      &      Least Squares       & \textbf{  F-statistic:       } &     55.02   \\
-    \textbf{Date:}                        &     Thu, 28 Oct 2021     & \textbf{  Prob (F-statistic):} &  4.62e-73   \\
-    \textbf{Time:}                        &         10:23:44         & \textbf{  Log-Likelihood:    } &   -10981.   \\
-    \textbf{No. Observations:}            &            2326          & \textbf{  AIC:               } & 2.198e+04   \\
-    \textbf{Df Residuals:}                &            2318          & \textbf{  BIC:               } & 2.202e+04   \\
-    \textbf{Df Model:}                    &               7          & \textbf{                     } &             \\
-    \textbf{Covariance Type:}             &        nonrobust         & \textbf{                     } &             \\
-    \bottomrule
-    \end{tabular}
-    \begin{tabular}{lcccccc}
-                                          & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$> |$t$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
-    \midrule
-    \textbf{nn ownership}                 &     119.9233  &      268.538     &     0.447  &         0.655        &     -406.677    &      646.524     \\
-    \textbf{blackrock ownership}          &    -161.3495  &       15.076     &   -10.702  &         0.000        &     -190.914    &     -131.785     \\
-    \textbf{nbim ownership}               &     753.2820  &       49.733     &    15.147  &         0.000        &      655.756    &      850.808     \\
-    \textbf{generali ownership}           &    3.256e+04  &     1.27e+04     &     2.556  &         0.011        &     7579.575    &     5.75e+04     \\
-    \textbf{jpmorgan ownership}           &     127.0964  &       85.784     &     1.482  &         0.139        &      -41.124    &      295.317     \\
-    \textbf{apg ownership}                &     -56.7330  &      589.452     &    -0.096  &         0.923        &    -1212.642    &     1099.176     \\
-    \textbf{dws ownership}                &     602.3616  &      187.174     &     3.218  &         0.001        &      235.315    &      969.408     \\
-    \textbf{blackrock annual}             &    2.244e-06  &     6.36e-08     &    35.268  &         0.000        &     2.12e-06    &     2.37e-06     \\
-    \textbf{blackrock interaction}        &   -1.207e-05  &     1.13e-06     &   -10.702  &         0.000        &    -1.43e-05    &    -9.85e-06     \\
-    \textbf{dws ri\_report}               &       0.1303  &        0.004     &    35.268  &         0.000        &        0.123    &        0.138     \\
-    \textbf{dws interaction}              &       2.6148  &        0.813     &     3.218  &         0.001        &        1.022    &        4.208     \\
-    \textbf{generali stewardship\_policy} &       0.1807  &        0.005     &    35.268  &         0.000        &        0.171    &        0.191     \\
-    \textbf{generali interaction}         &     196.0757  &       76.715     &     2.556  &         0.011        &       45.638    &      346.514     \\
-    \textbf{jpmorgan voting\_policy}      &       0.0003  &     8.58e-06     &    35.268  &         0.000        &        0.000    &        0.000     \\
-    \textbf{jpmorgan interaction}         &       0.0013  &        0.001     &     1.482  &         0.139        &       -0.000    &        0.003     \\
-    \textbf{const}                        &      30.0108  &        0.851     &    35.268  &         0.000        &       28.342    &       31.679     \\
-    \bottomrule
-    \end{tabular}
-    \begin{tabular}{lclc}
-    \textbf{Omnibus:}       & 184.609 & \textbf{  Durbin-Watson:     } &    1.890  \\
-    \textbf{Prob(Omnibus):} &   0.000 & \textbf{  Jarque-Bera (JB):  } &  108.661  \\
-    \textbf{Skew:}          &   0.391 & \textbf{  Prob(JB):          } & 2.54e-24  \\
-    \textbf{Kurtosis:}      &   2.286 & \textbf{  Cond. No.          } & 9.90e+23  \\
-    \bottomrule
-    \end{tabular}
-    %\caption{OLS Regression Results}
-    \end{center}
+  \begin{tabular}{lclc}
+  \toprule
+  \textbf{Dep. Variable:}                            & Environment Pillar Score & \textbf{  R-squared:         } &     0.142   \\
+  \textbf{Model:}                                    &           OLS            & \textbf{  Adj. R-squared:    } &     0.140   \\
+  \textbf{Method:}                                   &      Least Squares       & \textbf{  F-statistic:       } &     55.02   \\
+  \textbf{Date:}                                     &     Thu, 28 Oct 2021     & \textbf{  Prob (F-statistic):} &  4.62e-73   \\
+  \textbf{Time:}                                     &         10:42:07         & \textbf{  Log-Likelihood:    } &   -10981.   \\
+  \textbf{No. Observations:}                         &            2326          & \textbf{  AIC:               } & 2.198e+04   \\
+  \textbf{Df Residuals:}                             &            2318          & \textbf{  BIC:               } & 2.202e+04   \\
+  \textbf{Df Model:}                                 &               7          & \textbf{                     } &             \\
+  \textbf{Covariance Type:}                          &        nonrobust         & \textbf{                     } &             \\
+  \bottomrule
+  \end{tabular}
+  \begin{tabular}{lcccccc}
+                                                     & \textbf{coef} & \textbf{std err} & \textbf{t} & \textbf{P$> |$t$|$} & \textbf{[0.025} & \textbf{0.975]}  \\
+  \midrule
+  \textbf{nn ownership}                              &     119.9184  &      268.527     &     0.447  &         0.655        &     -406.660    &      646.497     \\
+  \textbf{blackrock ownership}                       &    -161.2999  &       15.072     &   -10.702  &         0.000        &     -190.855    &     -131.744     \\
+  \textbf{nbim ownership}                            &     753.2495  &       49.731     &    15.147  &         0.000        &      655.728    &      850.771     \\
+  \textbf{generali ownership}                        &    3.256e+04  &     1.27e+04     &     2.556  &         0.011        &     7579.575    &     5.75e+04     \\
+  \textbf{jpmorgan ownership}                        &     127.0813  &       85.773     &     1.482  &         0.139        &      -41.119    &      295.282     \\
+  \textbf{apg ownership}                             &     -56.7280  &      589.400     &    -0.096  &         0.923        &    -1212.534    &     1099.078     \\
+  \textbf{dws ownership}                             &     602.3544  &      187.172     &     3.218  &         0.001        &      235.312    &      969.397     \\
+  \textbf{blackrock stewardship\_policy}             &       0.5261  &        0.015     &    35.268  &         0.000        &        0.497    &        0.555     \\
+  \textbf{blackrock stewardship\_policy interaction} &      -2.8292  &        0.264     &   -10.702  &         0.000        &       -3.348    &       -2.311     \\
+  \textbf{dws stewardship\_policy}                   &       0.1662  &        0.005     &    35.268  &         0.000        &        0.157    &        0.175     \\
+  \textbf{dws stewardship\_policy interaction}       &       3.3387  &        1.037     &     3.218  &         0.001        &        1.304    &        5.373     \\
+  \textbf{generali stewardship\_policy}              &       0.1806  &        0.005     &    35.268  &         0.000        &        0.171    &        0.191     \\
+  \textbf{generali stewardship\_policy interaction}  &     196.0757  &       76.715     &     2.556  &         0.011        &       45.638    &      346.514     \\
+  \textbf{jpmorgan stewardship\_policy}              &       0.3271  &        0.009     &    35.268  &         0.000        &        0.309    &        0.345     \\
+  \textbf{jpmorgan stewardship\_policy interaction}  &       1.3860  &        0.935     &     1.482  &         0.139        &       -0.448    &        3.220     \\
+  \textbf{nn stewardship\_policy}                    &       0.1930  &        0.005     &    35.268  &         0.000        &        0.182    &        0.204     \\
+  \textbf{nn stewardship\_policy interaction}        &       0.7716  &        1.728     &     0.447  &         0.655        &       -2.617    &        4.160     \\
+  \textbf{apg stewardship\_policy}                   &       0.2830  &        0.008     &    35.268  &         0.000        &        0.267    &        0.299     \\
+  \textbf{apg stewardship\_policy interaction}       &      -0.5353  &        5.561     &    -0.096  &         0.923        &      -11.441    &       10.370     \\
+  \textbf{nbim stewardship\_policy}                  &       0.1969  &        0.006     &    35.268  &         0.000        &        0.186    &        0.208     \\
+  \textbf{nbim stewardship\_policy interaction}      &       4.9458  &        0.327     &    15.147  &         0.000        &        4.305    &        5.586     \\
+  \textbf{const}                                     &      29.9924  &        0.850     &    35.268  &         0.000        &       28.325    &       31.660     \\
+  \bottomrule
+  \end{tabular}
+  \begin{tabular}{lclc}
+  \textbf{Omnibus:}       & 184.609 & \textbf{  Durbin-Watson:     } &    1.890  \\
+  \textbf{Prob(Omnibus):} &   0.000 & \textbf{  Jarque-Bera (JB):  } &  108.661  \\
+  \textbf{Skew:}          &   0.391 & \textbf{  Prob(JB):          } & 2.54e-24  \\
+  \textbf{Kurtosis:}      &   2.286 & \textbf{  Cond. No.          } & 6.52e+21  \\
+  \bottomrule
+  \end{tabular}
+  %\caption{OLS Regression Results}
+  \end{center}
 
 \end{document}
