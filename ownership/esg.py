@@ -22,8 +22,10 @@ def yearly_esg_maker(raw:pd.DataFrame) -> Callable[[str, str], pd.DataFrame]:
         if int(year) < 2016 or int(year) > 2021:
             raise ValueError(f"Year {year} not valid. Data only available for period 2016-2021.") 
         
-        year_df = pd.pivot_table(data, 
-            index = ["Name"], columns=["Data type"], values = [str(year)])
+        year_df = pd.pivot_table(data, index = ["Name"], columns=["Data type"], values = [str(year)])[str(year)]
+
+        year_df.index = [s.replace(" ", "") for s in year_df.index]
+        year_df.columns = [s.strip() for s in year_df.columns]
 
         return year_df
 
