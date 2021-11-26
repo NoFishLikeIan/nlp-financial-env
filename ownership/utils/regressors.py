@@ -13,6 +13,8 @@ def parse_regressors(raw:pd.DataFrame):
 
     dfs = []
 
+    breakpoint()
+
     for i, j in index_pairs:
         chunk_raw = raw.reset_index(drop = True)
         chunk_df = chunk_raw.iloc[2:, i:(j - 1)]

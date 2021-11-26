@@ -612,3 +612,4 @@ data/ESG.xlsx
 data/ownership-factset.xlsx
 .vscode
 ownership/results/results.pdf
+.DS_Store
