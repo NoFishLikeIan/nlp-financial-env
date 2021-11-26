@@ -30,3 +30,18 @@ def yearly_esg_maker(raw:pd.DataFrame) -> Callable[[str, str], pd.DataFrame]:
         return year_df
 
     return getyear
+
+if __name__ == "__main__":
+    import dotenv, os
+
+    dotenv.load_dotenv()
+
+    data_path = os.path.join("..", os.environ.get("DATA_PATH"))
+
+    esg_path = os.path.join(data_path, "ESG.xlsx")
+    sheet_name = os.environ.get("SHEET_NAME")
+
+    raw = pd.read_excel(esg_path, sheet_name = sheet_name)
+    get = yearly_esg_maker(raw)
+
+    get(2016)

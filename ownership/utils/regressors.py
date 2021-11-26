@@ -21,12 +21,25 @@ def parse_regressors(raw:pd.DataFrame):
         chunk_df.columns = [f"{col}-{year}" for col in chunk_raw.iloc[1, i:(j - 1)]]
 
         chunk_df = chunk_df.set_index(firms)
-
-
         dfs.append(chunk_df)
 
-    return pd.concat(dfs, axis = 1)
+    df = pd.concat(dfs, axis = 1).apply(pd.to_numeric, axis = 0)
+
+    return df
 
     
+if __name__ == "__main__":
+    
+    from dotenv import load_dotenv
+    import os
+
+    load_dotenv()
+
+    data_path = os.path.join("..", os.environ.get("DATA_PATH"))
+    reg_path = os.path.join(data_path, "controls.csv")
+
+    raw = pd.read_csv(reg_path)
+    parse_regressors(raw)
+
 
     
