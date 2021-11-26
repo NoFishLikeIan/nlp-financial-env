@@ -5,17 +5,16 @@ def parse_regressors(raw:pd.DataFrame):
     firms = raw.iloc[2:, 1].rename("Firms")
 
     index_chunk = [
-        i for i, x in enumerate(raw.loc[0]) 
-        if not pd.isna(x)
+        *(i for i, x in enumerate(raw.loc[0]) if not pd.isna(x)),
+        -1
     ]
 
-    index_pairs = zip(index_chunk, index_chunk[1:])
+    index_pairs = list(zip(index_chunk, index_chunk[1:]))
 
     dfs = []
 
-    breakpoint()
-
     for i, j in index_pairs:
+
         chunk_raw = raw.reset_index(drop = True)
         chunk_df = chunk_raw.iloc[2:, i:(j - 1)]
 
@@ -41,7 +40,7 @@ if __name__ == "__main__":
     reg_path = os.path.join(data_path, "controls.csv")
 
     raw = pd.read_csv(reg_path)
-    parse_regressors(raw)
+    df = parse_regressors(raw)
 
 
     
